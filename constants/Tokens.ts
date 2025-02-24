@@ -1,0 +1,48 @@
+export const Tokens = {
+    SOL: {
+      name: "Solana",
+      image: "https://cryptologos.cc/logos/solana-sol-logo.png",
+      mint: "So11111111111111111111111111111111111111112",
+    },
+    USDC: {
+      name: "USD Coin",
+      image: "https://cryptologos.cc/logos/usd-coin-usdc-logo.png",
+      mint: "EPjFWdd5AufqSSqeM2qCjiW6XjCSr51asYhgwJqTyZVK",
+    },
+    USDT: {
+      name: "Tether",
+      image: "https://cryptologos.cc/logos/tether-usdt-logo.png",
+      mint: "Es9vMFrzaCERt8B5oFzU6rgJjLfSwo3mJg5T3h8ATs4",
+    },
+    BONK: {
+      name: "Bonk",
+      image: "https://cryptologos.cc/logos/bonk-bonk-logo.png",
+      mint: "DezXCBbd6RvjMr8bbyhWrZ5dDzHvTpWjCaiWbfFsKxZt",
+    },
+    RAY: {
+      name: "Raydium",
+      image: "https://cryptologos.cc/logos/raydium-ray-logo.png",
+      mint: "4k3Dyjzvzp8eLY8WzQ1UeZ3mjHyyh9Guhz5Tz4jDe3Gk",
+    },
+    ORCA: {
+      name: "Orca",
+      image: "https://cryptologos.cc/logos/orca-orca-logo.png",
+      mint: "orca2kThSytnt3Dmpz9x6fnJqBq3RFYkrLusdU2MQpV",
+    },
+    JUP: {
+      name: "Jupiter",
+      image: "https://cryptologos.cc/logos/jupiter-jup-logo.png",
+      mint: "JUP7fb3JjzvL2xsSazNzbpFauKRB6oXTqf37aFP3h9U",
+    },
+    MNDE: {
+      name: "Marinade",
+      image: "https://cryptologos.cc/logos/marinade-mnde-logo.png",
+      mint: "MNDEoS6zTknX3XbRU82e3K5wTAPmGDeS3CCaFZhRPiR",
+    },
+    SAMO: {
+      name: "Samoyedcoin",
+      image: "https://cryptologos.cc/logos/samoyedcoin-samo-logo.png",
+      mint: "7xKX2LHhRpD74eLUoTeKoHCkXW6xvmZtAeC2zQj9yX7H",
+    },
+  };
+  
