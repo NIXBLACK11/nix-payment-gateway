@@ -5,6 +5,7 @@ interface IUser extends Document {
 	saasName: string;
 	logoUrl: string;
 	address: string;
+	callBack: string;
 }
 
 const UserSchema = new Schema<IUser>(
@@ -13,6 +14,7 @@ const UserSchema = new Schema<IUser>(
 		saasName: { type: String, required: true },
 		logoUrl: { type: String, required: true },
 		address: { type: String, required: true },
+		callBack: { type: String, required: true },
 	},
 	{ timestamps: true }
 );

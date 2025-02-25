@@ -2,17 +2,24 @@
 
 import { Tokens } from "@/constants/Tokens";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PublicKey, Connection, VersionedTransaction } from "@solana/web3.js";
 import { getAssociatedTokenAddress, TOKEN_PROGRAM_ID, ASSOCIATED_TOKEN_PROGRAM_ID, getAccount } from "@solana/spl-token";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { bs58 } from "@coral-xyz/anchor/dist/cjs/utils/bytes";
+import { fetchSession } from "../lib/fetchSession";
+import { useRouter } from "next/navigation";
 
 const RPC_URL = process.env.RPC_URL || "https://mainnet.helius-rpc.com/?api-key=ceca143d-9281-4e2a-9c77-c0e540fe4b09";
 const connection = new Connection(RPC_URL, "confirmed");
 const USDC_MINT = new PublicKey(Tokens["USDC"].mint);
 
-export const PaymentModal = () => {
+interface PaymentModalProps {
+    sessionId: string;
+}
+
+export const PaymentModal: React.FC<PaymentModalProps> = ({ sessionId }) => {
+    const router = useRouter();
     const { publicKey, signTransaction } = useWallet();
     const [loading, setLoading] = useState(false);
     const [email, setEmail] = useState("siddharthsinghrana11@gmail.com");
@@ -27,6 +34,23 @@ export const PaymentModal = () => {
     );
     const [selectedToken, setSelectedToken] = useState<keyof typeof Tokens | "">("");
     const [tokenMintAddress, setTokenMintAddress] = useState("");
+
+    useEffect(() => {
+        const fetchSessionCaller = async () => {
+            const res = await fetchSession(sessionId);
+            if(!res || !res._id || !res.address || !res.email || !res.plan || !res.price || !res.saasId || !res.time) {
+                router.push("/exampleSaas");
+                return;
+            }
+            setEmail(res.email);
+            setSaasLogoURL(res.logoUrl);
+            // setSaasName(res.) /// only left checking the session time valid can be 30 also add saas name in db
+            setPlan(res.plan);
+            setPricing(res.price);
+            setMerchantWalletAddress(res.address);
+        }
+        fetchSessionCaller();
+    }, []);
 
     const handleTokenChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const tokenKey = e.target.value as keyof typeof Tokens;

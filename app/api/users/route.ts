@@ -6,16 +6,14 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(req: NextRequest) {
 	await connectDB();
 	try {
-		const { publicKey, saasName, logoUrl, address, tiers } = await req.json();
+		const { publicKey, saasName, logoUrl, address, callBack, tiers } = await req.json();
 
 		if (!tiers || !Array.isArray(tiers) || tiers.length === 0) {
 			return NextResponse.json({ message: "Tiers must be provided as an array." }, { status: 400 });
 		}
 
-		// Create the User
-		const newUser = await User.create({ publicKey, saasName, logoUrl, address });
+		const newUser = await User.create({ publicKey, saasName, logoUrl, address, callBack });
 
-		// Add User-specific Tiers
 		const formattedTiers = tiers.map(tier => ({
 			saasId: newUser._id,
 			tier: tier.tier,

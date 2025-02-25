@@ -7,20 +7,17 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
   await connectDB();
 
   try {
-    const { id } = params;
-    const { saasName, logoUrl, address, tiers } = await req.json();
+    const { id } = await params;
+    const { saasName, logoUrl, address, callBack, tiers } = await req.json();
 
-    // Update the User
-    const updatedUser = await User.findByIdAndUpdate(id, { saasName, logoUrl, address }, { new: true });
+    const updatedUser = await User.findByIdAndUpdate(id, { saasName, logoUrl, address, callBack }, { new: true });
 
     if (!updatedUser) {
       return NextResponse.json({ message: "User not found" }, { status: 404 });
     }
 
-    // Remove old tiers associated with the user
-    await Tier.deleteMany({ saasId: id });
+    await Tier.deleteMany({ saasId: id }); //to remove ol ones
 
-    // Insert new tiers
     const formattedTiers = tiers.map((tier: { tier: string; price: number }) => ({
       saasId: id,
       tier: tier.tier,

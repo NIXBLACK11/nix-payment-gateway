@@ -10,6 +10,7 @@ export const CreateSaas = () => {
         saasName: '',
         logoUrl: '',
         address: '',
+        callBack: '',
         tiers: [
             { tier: 'Starter', price: 5 },
             { tier: 'Growth', price: 20 },
@@ -135,6 +136,21 @@ export const CreateSaas = () => {
                                 id="address"
                                 name="address"
                                 value={formData.address}
+                                onChange={handleInputChange}
+                                className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-gray-400 focus:outline-none"
+                                required
+                            />
+                        </div>
+
+                        <div>
+                            <label htmlFor="callBack" className="block text-sm font-medium text-gray-700 mb-1">
+                                Callback URL
+                            </label>
+                            <input
+                                type="text"
+                                id="callBack"
+                                name="callBack"
+                                value={formData.callBack}
                                 onChange={handleInputChange}
                                 className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-gray-400 focus:outline-none"
                                 required

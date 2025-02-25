@@ -230,6 +230,9 @@ export const HomePage = () => {
                                             Address
                                         </th>
                                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Callback URL
+                                        </th>
+                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                             Tiers
                                         </th>
                                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -279,6 +282,9 @@ export const HomePage = () => {
                                                     </td>
                                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                                         {user.address}
+                                                    </td>
+                                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                        {user.callBack}
                                                     </td>
                                                     <td className="px-6 py-4 whitespace-nowrap">
                                                         {user.tiers.map((tier) => (
@@ -389,6 +395,17 @@ export const HomePage = () => {
                                     type="text"
                                     name="address"
                                     value={editingUser.address}
+                                    onChange={handleInputChange}
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                                />
+                            </div>
+
+                            <div className="mb-4">
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Callback URL</label>
+                                <input
+                                    type="text"
+                                    name="callBack"
+                                    value={editingUser.callBack}
                                     onChange={handleInputChange}
                                     className="w-full px-3 py-2 border border-gray-300 rounded-md"
                                 />

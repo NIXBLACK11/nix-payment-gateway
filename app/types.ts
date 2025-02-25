@@ -13,6 +13,7 @@ export type UserType = {
     saasName: string;
     logoUrl: string;
     address: string;
+    callBack: string;
     tiers: TierType[];
 };
 
@@ -28,4 +29,15 @@ export type BuyerType = {
 export type SaaSBuyersData = {
     saasName: string;
     buyers: BuyerType[];
+};
+
+export type SessionType = {
+    _id: string;
+    saasId: string;
+    time: string;
+    email: string;
+    address: string;
+    logoUrl: string;
+    plan: string;
+    price: number;
 };
