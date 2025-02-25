@@ -11,7 +11,7 @@ export default function User() {
     const [activePage, setActivePage] = useState<PageKey>('home');
 
     return (
-        <div className="w-screen min-h-screen bg-white">
+        <div className="max-w-screen min-h-screen bg-white">
             {(!hide) ? (
                 <div className="w-full h-full flex flex-row">
                     <div className="w-2/12 flex flex-col justify-between bg-white border-r border-gray-200">
