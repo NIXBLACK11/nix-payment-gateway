@@ -1,4 +1,5 @@
 import { PageKey } from "../types";
+import { CreateSaas } from "./CreateSaas";
 import { HomePage } from "./HomePage";
 import { UserPage } from "./UserPage";
 
@@ -11,6 +12,7 @@ export const MainPart: React.FC<MainPartProps>  = ({ activePage }) => {
     const components = {
         home: <HomePage />,
         user: <UserPage />,
+        saas: <CreateSaas />
         // payment: <PaymentPage />,
         // settings: <SettingsPage />
     };

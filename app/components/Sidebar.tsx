@@ -1,4 +1,4 @@
-import { FiCreditCard, FiHome, FiLogOut, FiSettings, FiSidebar, FiUser } from "react-icons/fi";
+import { FiCreditCard, FiHome, FiLogOut, FiSettings, FiShoppingBag, FiSidebar, FiUser } from "react-icons/fi";
 import { PageKey } from "../types";
 
 type SidebarProps = {
@@ -12,7 +12,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ setActivePage, activePage, set
     const menuItems = [
         { id: 'home', label: 'Dashboard', icon: <FiHome /> },
         { id: 'user', label: 'User Profile', icon: <FiUser /> },
-        // { id: 'payment', label: 'Payments', icon: <FiCreditCard /> },
+        { id: 'saas', label: 'Create Saas', icon: <FiShoppingBag /> },
         // { id: 'settings', label: 'Settings', icon: <FiSettings /> },
     ];
 

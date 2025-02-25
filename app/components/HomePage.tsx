@@ -10,6 +10,7 @@ export const HomePage = () => {
     const { publicKey } = useWallet();
     const [userData, setUserData] = useState<FetchUserDataType | null>(null);
     const [loading, setLoading] = useState(true);
+    const [loadingUpdate, setLoadingUpdate] = useState(false);
     const [editingUser, setEditingUser] = useState<UserType | null>(null);
     const [showEditModal, setShowEditModal] = useState(false);
     const [copiedId, setCopiedId] = useState<string | null>(null);
@@ -71,21 +72,28 @@ export const HomePage = () => {
     };
 
     const handleSaveEdit = async () => {
-        if (!editingUser || !userData) return;
+        try {
+            setLoadingUpdate(true);
+            if (!editingUser || !userData) return;
 
-        const updatedUser = await updateUserData(editingUser._id, editingUser);
+            const updatedUser = await updateUserData(editingUser._id, editingUser);
 
-        if (updatedUser) {
-            // Update local state after API update
-            const updatedUserData = userData.map(user =>
-                user._id === updatedUser._id ? updatedUser : user
-            );
+            if (updatedUser) {
+                // Update local state after API update
+                const updatedUserData = userData.map(user =>
+                    user._id === updatedUser._id ? updatedUser : user
+                );
 
-            setUserData(updatedUserData);
+                setUserData(updatedUserData);
+            }
+
+            setShowEditModal(false);
+            setEditingUser(null);
+        } catch (err) {
+            console.log(err);
+        } finally {
+            setLoadingUpdate(false);
         }
-
-        setShowEditModal(false);
-        setEditingUser(null);
     };
 
 
@@ -490,7 +498,17 @@ export const HomePage = () => {
                                 onClick={handleSaveEdit}
                                 className="px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700"
                             >
-                                Save All Changes
+                                {loadingUpdate ? (
+                                    <>
+                                        <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                        </svg>
+                                        Processing...
+                                    </>
+                                ) : (
+                                    "Save All Changes"
+                                )}
                             </button>
                         </div>
                     </div>
