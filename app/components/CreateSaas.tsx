@@ -1,10 +1,12 @@
+import { useWallet } from '@solana/wallet-adapter-react';
 import React, { useState } from 'react';
 
 export const CreateSaas = () => {
+    const { publicKey } = useWallet();
     const [loading, setLoading] = useState(false);
     const [, setResponse] = useState('');
     const [formData, setFormData] = useState({
-        publicKey: '',
+        publicKey: publicKey?.toString(),
         saasName: '',
         logoUrl: '',
         address: '',
@@ -73,7 +75,7 @@ export const CreateSaas = () => {
 
     return (
         <div className="max-w-4xl mx-auto py-8 px-4">
-            <h1 className="text-2xl font-bold text-black mb-6">Create New SaaS User</h1>
+            <h1 className="text-2xl font-bold text-black mb-6">Create New SaaS</h1>
 
             <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm mb-6">
                 <form onSubmit={handleSubmit}>
@@ -101,6 +103,7 @@ export const CreateSaas = () => {
                                 type="text"
                                 id="publicKey"
                                 name="publicKey"
+                                readOnly
                                 value={formData.publicKey}
                                 onChange={handleInputChange}
                                 className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-gray-400 focus:outline-none"
@@ -125,7 +128,7 @@ export const CreateSaas = () => {
 
                         <div>
                             <label htmlFor="address" className="block text-sm font-medium text-gray-700 mb-1">
-                                Wallet Address
+                                Merchant Address
                             </label>
                             <input
                                 type="text"
@@ -212,7 +215,7 @@ export const CreateSaas = () => {
                                     Processing...
                                 </>
                             ) : (
-                                'Create User'
+                                'Create Payment Gateway'
                             )}
                         </button>
                     </div>

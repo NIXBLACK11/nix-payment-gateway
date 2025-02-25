@@ -2,7 +2,6 @@ import { FetchUserDataType } from "../types";
 
 export async function fetchUserData(publicKey: string): Promise<FetchUserDataType | null> {
     try {
-        publicKey = "123abc";
         const res = await fetch(`/api/users/${publicKey}`);
 
         if (!res.ok) throw new Error("Failed to fetch user data");

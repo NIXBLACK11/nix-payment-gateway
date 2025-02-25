@@ -17,3 +17,15 @@ export type UserType = {
 };
 
 export type FetchUserDataType = UserType[];
+
+export type BuyerType = {
+    email: string;
+    plan: string;
+    price: number | null;
+    time: string;
+};
+
+export type SaaSBuyersData = {
+    saasName: string;
+    buyers: BuyerType[];
+};
