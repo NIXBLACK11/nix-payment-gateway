@@ -26,11 +26,13 @@ export async function POST(req: NextRequest) {
 
         const newSession = await Session.create({
             saasId,
+            saasName: user.saasName,
             email,
             address: user.address,
             logoUrl: user.logoUrl,
             plan,
             price: tier.price,
+            hash: '',
         });
 
         return NextResponse.json({ sessionId: newSession._id }, { status: 201 });

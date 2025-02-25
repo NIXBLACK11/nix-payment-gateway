@@ -6,7 +6,7 @@ export async function createSession(saasId: string, email: string, plan: string)
             body: JSON.stringify({ saasId, email, plan }),
         });
 
-        if (!res.ok) throw new Error("Failed to create session");
+        if (!res.ok) return null;
 
         const data = await res.json();
         return data.sessionId; // Returns the session ID

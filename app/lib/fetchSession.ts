@@ -4,7 +4,7 @@ export async function fetchSession(sessionId: string): Promise<SessionType | nul
     try {
         const res = await fetch(`/api/session/${sessionId}`);
 
-        if (!res.ok) throw new Error("Failed to fetch session");
+        if (!res.ok) return null;
 
         return await res.json();
     } catch (error) {

@@ -4,7 +4,7 @@ export async function fetchUserData(publicKey: string): Promise<FetchUserDataTyp
     try {
         const res = await fetch(`/api/users/${publicKey}`);
 
-        if (!res.ok) throw new Error("Failed to fetch user data");
+        if (!res.ok) return null;
         const data = await res.json();
         const users: FetchUserDataType = data.users;
         return users;

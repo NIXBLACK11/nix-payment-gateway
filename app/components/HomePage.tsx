@@ -24,8 +24,12 @@ export const HomePage = () => {
 
             try {
                 const fetchedUserData = await fetchUserData(publicKey.toString());
+
                 if (fetchedUserData) {
                     setUserData(fetchedUserData);
+                } else {
+                    alert("Error fetching user data");
+                    return;
                 }
             } catch (err) {
                 console.error("Error fetching user data:", err);
@@ -77,6 +81,10 @@ export const HomePage = () => {
             if (!editingUser || !userData) return;
 
             const updatedUser = await updateUserData(editingUser._id, editingUser);
+            if(!updatedUser) {
+                alert("Error in uodating user")
+                return;
+            }
 
             if (updatedUser) {
                 // Update local state after API update

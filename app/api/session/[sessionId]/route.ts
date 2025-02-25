@@ -6,12 +6,21 @@ export async function GET(req: NextRequest, { params }: { params: { sessionId: s
     await connectDB();
 
     try {
-        const { sessionId } = params;
+        const { sessionId } = await params;
 
         const session = await Session.findById(sessionId);
 
         if (!session) {
             return NextResponse.json({ message: "Session not found" }, { status: 404 });
+        }
+
+        const now = new Date();
+        const sessionTime = new Date(session.time);
+        const timeDiff = (now.getTime() - sessionTime.getTime()) / (1000 * 60 * 60);
+
+        if (timeDiff > 6) {
+            await Session.findByIdAndDelete(sessionId);
+            return NextResponse.json({ message: "Session expired and deleted" }, { status: 410 });
         }
 
         return NextResponse.json(session, { status: 200 });

@@ -9,8 +9,10 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { bs58 } from "@coral-xyz/anchor/dist/cjs/utils/bytes";
 import { fetchSession } from "../lib/fetchSession";
 import { useRouter } from "next/navigation";
+import { verifyPayment } from "../lib/verifyPayment";
 
-const RPC_URL = process.env.RPC_URL || "https://mainnet.helius-rpc.com/?api-key=ceca143d-9281-4e2a-9c77-c0e540fe4b09";
+const RPC_URL = process.env.NEXT_PUBLIC_RPC_URL || "";
+console.log(RPC_URL);
 const connection = new Connection(RPC_URL, "confirmed");
 const USDC_MINT = new PublicKey(Tokens["USDC"].mint);
 
@@ -38,13 +40,18 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ sessionId }) => {
     useEffect(() => {
         const fetchSessionCaller = async () => {
             const res = await fetchSession(sessionId);
-            if(!res || !res._id || !res.address || !res.email || !res.plan || !res.price || !res.saasId || !res.time) {
+            console.log(res);
+            if (res && res.hash != '') {
+                router.push("/exampleSaas");
+                return;
+            }
+            if (!res || !res._id || !res.address || !res.email || !res.plan || !res.price || !res.saasId || !res.time) {
                 router.push("/exampleSaas");
                 return;
             }
             setEmail(res.email);
             setSaasLogoURL(res.logoUrl);
-            // setSaasName(res.) /// only left checking the session time valid can be 30 also add saas name in db
+            setSaasName(res.saasName);
             setPlan(res.plan);
             setPricing(res.price);
             setMerchantWalletAddress(res.address);
@@ -111,31 +118,40 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ sessionId }) => {
                 throw new Error("Invalid swap response. Check parameters.");
             }
 
-            const transactionBase64 = swapResponse.swapTransaction;
-            console.log("Transaction->", transactionBase64);
-            const transaction = VersionedTransaction.deserialize(Buffer.from(transactionBase64, "base64"));
+            // const transactionBase64 = swapResponse.swapTransaction;
+            // console.log("Transaction->", transactionBase64);
+            // const transaction = VersionedTransaction.deserialize(Buffer.from(transactionBase64, "base64"));
 
-            const signedTransaction = await signTransaction(transaction);
-            const transactionBinary = signedTransaction.serialize();
-            console.log("---------------------------------------------------------");
-            const signature1 = bs58.encode(signedTransaction.signatures[0]);
-            console.log("Transaction Signature:", signature1);
+            // const signedTransaction = await signTransaction(transaction);
+            // const transactionBinary = signedTransaction.serialize();
+            // console.log("---------------------------------------------------------");
+            // const signature1 = bs58.encode(signedTransaction.signatures[0]);
+            // console.log("Transaction Signature:", signature1);
 
-            // Send transaction
-            const signature = await connection.sendRawTransaction(transactionBinary, { 
-                maxRetries: 10, 
-                preflightCommitment: "finalized" 
-            });
-            console.log(`Transaction Sent: https://solscan.io/tx/${signature}/`);
+            // // Send transaction
+            // const signature = await connection.sendRawTransaction(transactionBinary, { 
+            //     maxRetries: 10, 
+            //     preflightCommitment: "finalized" 
+            // });
+            // console.log(`Transaction Sent: https://solscan.io/tx/${signature}/`);
 
-            // Confirm transaction (Fixed)
-            const confirmation = await connection.confirmTransaction(signature, "finalized");
-            if (confirmation.value.err) {
-                throw new Error(`Transaction failed: ${JSON.stringify(confirmation.value.err)}`);
+            // // Confirm transaction (Fixed)
+            // const confirmation = await connection.confirmTransaction(signature, "finalized");
+            // if (confirmation.value.err) {
+            //     throw new Error(`Transaction failed: ${JSON.stringify(confirmation.value.err)}`);
+            // }
+
+            // console.log(`Transaction Successful: https://solscan.io/tx/${signature}/`);
+
+            const response = verifyPayment(sessionId, "ef43f", publicKey.toString());
+            if (!response) {
+                alert('Corrupted payment');
+                return;
             }
-
-            console.log(`Transaction Successful: https://solscan.io/tx/${signature}/`);
             alert("Payment Successful!");
+            setTimeout(() => {
+                router.push("exampleSaas");
+            }, 3000);
         } catch (err) {
             console.error("Payment Error:", err);
             alert("Payment Failed!");

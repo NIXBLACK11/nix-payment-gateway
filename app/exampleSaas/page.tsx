@@ -19,6 +19,10 @@ export default function ExampleSaas() {
 
         try {
             const result = await createSession(saasId, email, plan);
+            if(!result) {
+                alert("Error creating session");
+                return;
+            }
             router.push(`/payment?sessionId=${result}`);
         } catch (err) {
             setError("Failed to create session. Please try again.");

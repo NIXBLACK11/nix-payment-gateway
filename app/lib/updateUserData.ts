@@ -8,7 +8,7 @@ export async function updateUserData(userId: string, updatedUser: UserType): Pro
         body: JSON.stringify(updatedUser),
       });
   
-      if (!res.ok) throw new Error("Failed to update user");
+      if (!res.ok) return null;
   
       const data = await res.json();
       return { ...data.user, tiers: data.tiers };
