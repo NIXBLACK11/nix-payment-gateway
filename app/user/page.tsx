@@ -1,14 +1,22 @@
 "use client"
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FiSidebar } from "react-icons/fi";
 import { Sidebar } from '../components/Sidebar';
 import { MainPart } from '../components/MainPart';
 import { PageKey } from '../types';
+import { useWallet } from '@solana/wallet-adapter-react';
+import { useRouter } from 'next/navigation';
 
 export default function User() {
     const [hide, setHide] = useState(false);
     const [activePage, setActivePage] = useState<PageKey>('home');
+    const { connected } = useWallet();
+    const router = useRouter();
+
+    useEffect(() => {
+        if(!connected) router.push("../");
+    }, []);
 
     return (
         <div className="max-w-screen min-h-screen bg-white">
