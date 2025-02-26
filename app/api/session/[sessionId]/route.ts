@@ -2,11 +2,11 @@ import { connectDB } from "@/app/lib/mongo";
 import Session from "@/app/models/Session";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextRequest, { params }: { params: { sessionId: string } }) {
+export async function GET(req: NextRequest, { params }: { params: Promise<{ sessionId: string }> }) {
     await connectDB();
 
     try {
-        const { sessionId } = await params;
+        const sessionId = (await params).sessionId;
 
         const session = await Session.findById(sessionId);
 

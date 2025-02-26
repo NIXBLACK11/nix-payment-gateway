@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export default function Home() {
-	const { connected, publicKey } = useWallet();
+	const { connected } = useWallet();
 	const router  = useRouter();
 	useEffect(() => {
 		if(connected) {

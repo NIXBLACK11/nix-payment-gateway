@@ -3,13 +3,12 @@ import User from "@/app/models/User";
 import Buyer from "@/app/models/Buyer";
 import Tier from "@/app/models/Tier";
 import { NextRequest, NextResponse } from "next/server";
-import mongoose from "mongoose";
 
-export async function GET(req: NextRequest, { params }: { params: { publicKey: string } }) {
+export async function GET( req: NextRequest, { params }: { params: Promise<{ publicKey: string }> } ) {
 	await connectDB();
 
 	try {
-		const { publicKey } = await params;
+		const publicKey = (await params).publicKey;
 
 		const saasList = await User.find({ publicKey });
 
@@ -24,8 +23,8 @@ export async function GET(req: NextRequest, { params }: { params: { publicKey: s
 
 		const buyers = await Buyer.find({
 			saasId: { $in: saasIds },
-			time: { $gte: oneMonthAgo }, // Get only the past month's data
-		}).sort({ time: -1 }); // Sort by date (most recent first)
+			time: { $gte: oneMonthAgo },
+		}).sort({ time: -1 });
 
 		const tiers = await Tier.find({ saasId: { $in: saasIds } });
 
@@ -47,7 +46,6 @@ export async function GET(req: NextRequest, { params }: { params: { publicKey: s
 					};
 				}),
 		}));
-		console.log(responseData);
 
 		return NextResponse.json({ data: responseData }, { status: 200 });
 	} catch (error) {

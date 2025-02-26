@@ -2,11 +2,11 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { PaymentModal } from "../components/PaymentModal";
-import { useEffect, useMemo } from "react";
+import { Suspense, useEffect } from "react";
 
-export default function Payment() {
+function PaymentContent() {
     const router = useRouter();
-    const searchParams = useSearchParams(); 
+    const searchParams = useSearchParams();
     const sessionId = searchParams.get("sessionId") || "";
 
     useEffect(() => {
@@ -15,9 +15,15 @@ export default function Payment() {
         }
     }, [sessionId, router]);
 
+    return <PaymentModal sessionId={sessionId} />;
+}
+
+export default function Payment() {
     return (
         <div className="w-screen h-screen bg-[#ffffff]">
-            <PaymentModal sessionId={sessionId} />
+            <Suspense fallback={<div>Loading...</div>}>
+                <PaymentContent />
+            </Suspense>
         </div>
     );
 }

@@ -18,7 +18,7 @@ export const CreateSaas = () => {
         ]
     });
 
-    const handleInputChange = (e: { target: { name: any; value: any; }; }) => {
+    const handleInputChange = (e: { target: { name: string; value: string; }; }) => {
         const { name, value } = e.target;
         setFormData({
             ...formData,
@@ -117,7 +117,7 @@ export const CreateSaas = () => {
                                 Logo URL
                             </label>
                             <input
-                                type="url"
+                                type="text"
                                 id="logoUrl"
                                 name="logoUrl"
                                 value={formData.logoUrl}

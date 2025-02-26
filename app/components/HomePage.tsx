@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { fetchUserData } from "../lib/fetchUserData";
-import { FetchUserDataType, UserType, TierType, PageKey } from "../types";
+import { FetchUserDataType, UserType, TierType } from "../types";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { updateUserData } from "../lib/updateUserData";
 

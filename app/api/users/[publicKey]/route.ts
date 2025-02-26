@@ -3,11 +3,11 @@ import User from "@/app/models/User";
 import Tier from "@/app/models/Tier";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextRequest, { params }: { params: { publicKey: string } }) {
+export async function GET(req: NextRequest, { params }: { params: Promise<{ publicKey: string }> }) {
     await connectDB();
 
     try {
-        const { publicKey } = await params;
+        const publicKey = (await params).publicKey;
         const users = await User.find({ publicKey });
         if (!users.length) {
             return NextResponse.json({ message: "No users found for this publicKey" }, { status: 404 });

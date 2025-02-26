@@ -3,11 +3,11 @@ import User from "@/app/models/User";
 import Tier from "@/app/models/Tier";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   await connectDB();
 
   try {
-    const { id } = await params;
+    const id = (await params).id;
     const { saasName, logoUrl, address, callBack, tiers } = await req.json();
 
     const updatedUser = await User.findByIdAndUpdate(id, { saasName, logoUrl, address, callBack }, { new: true });

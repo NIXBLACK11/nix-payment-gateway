@@ -3,10 +3,9 @@
 import { Tokens } from "@/constants/Tokens";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 import { useEffect, useState } from "react";
-import { PublicKey, Connection, VersionedTransaction } from "@solana/web3.js";
-import { getAssociatedTokenAddress, TOKEN_PROGRAM_ID, ASSOCIATED_TOKEN_PROGRAM_ID, getAccount } from "@solana/spl-token";
+import { PublicKey, Connection } from "@solana/web3.js";
+import { getAssociatedTokenAddress, TOKEN_PROGRAM_ID, ASSOCIATED_TOKEN_PROGRAM_ID } from "@solana/spl-token";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { bs58 } from "@coral-xyz/anchor/dist/cjs/utils/bytes";
 import { fetchSession } from "../lib/fetchSession";
 import { useRouter } from "next/navigation";
 import { verifyPayment } from "../lib/verifyPayment";
@@ -57,7 +56,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ sessionId }) => {
             setMerchantWalletAddress(res.address);
         }
         fetchSessionCaller();
-    }, []);
+    }, [sessionId]);
 
     const handleTokenChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const tokenKey = e.target.value as keyof typeof Tokens;
@@ -243,12 +242,12 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ sessionId }) => {
                             <label className="flex items-start gap-2">
                                 <input type="checkbox" className="mt-1" />
                                 <span className="text-sm text-gray-600">
-                                    I'm purchasing as a business
+                                    {`I'm purchasing as a business`}
                                 </span>
                             </label>
 
                             <div className="text-sm text-gray-600">
-                                By subscribing, you agree to {saasName}'s Terms of Use and Privacy Policy.
+                                {`By subscribing, you agree to {saasName}'s Terms of Use and Privacy Policy.`}
                             </div>
 
                             {(loading == true) ?

@@ -26,6 +26,7 @@ export default function ExampleSaas() {
             router.push(`/payment?sessionId=${result}`);
         } catch (err) {
             setError("Failed to create session. Please try again.");
+            console.log(err);
         } finally {
             setLoading(false);
         }

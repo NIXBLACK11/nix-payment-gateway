@@ -16,7 +16,7 @@ export default function User() {
 
     useEffect(() => {
         if(!connected) router.push("../");
-    }, []);
+    }, [connected]);
 
     return (
         <div className="max-w-screen min-h-screen bg-white">

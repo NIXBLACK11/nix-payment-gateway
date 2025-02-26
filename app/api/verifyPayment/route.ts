@@ -5,8 +5,8 @@ import Tier from "@/app/models/Tier";
 import { NextRequest, NextResponse } from "next/server";
 
 // Implement this function for actual verification
-async function verifyTransaction(hash: string, pubKey: string, sessionData: any, tier: any): Promise<boolean> {
-    console.log("Verifying transaction:", hash, pubKey, sessionData);
+async function verifyTransaction(hash: string, pubKey: string): Promise<boolean> {
+    console.log("Verifying transaction:", hash, pubKey);
     return true; // Replace with actual verification logic
 }
 
@@ -36,7 +36,7 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ message: "Tier not found for this plan" }, { status: 404 });
         }
 
-        const isValid = await verifyTransaction(hash, userPubKey, session, tier);
+        const isValid = await verifyTransaction(hash, userPubKey);
         if (!isValid) {
             return NextResponse.json({ message: "Transaction verification failed" }, { status: 400 });
         }
