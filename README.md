@@ -23,3 +23,6 @@ npm run workers
     // "workers": "concurrently \"npm run worker:email\" \"npm run worker:callback\""
 
     npm i concurrently
+
+  workers repo
+  https://github.com/NIXBLACK11/nix-payment-gateway-workers
