@@ -2,20 +2,19 @@
 import { getAssociatedTokenAddress } from "@solana/spl-token";
 import { Connection, PublicKey } from "@solana/web3.js";
 
-// const connection = new Connection(process.env.NEXT_PUBLIC_RPC_URL || "");
 export const Tokens = {
-	SOL: {
-		name: "Solana",
+    SOL: {
+        name: "Solana",
 		image: "https://cryptologos.cc/logos/solana-sol-logo.png",
 		mint: "So11111111111111111111111111111111111111112",
 	},
 	USDC: {
-		name: "USD Coin",
+        name: "USD Coin",
 		image: "https://cryptologos.cc/logos/usd-coin-usdc-logo.png",
 		mint: "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
 	},
 };
-const connection = new Connection("https://mainnet.helius-rpc.com/?api-key=ceca143d-9281-4e2a-9c77-c0e540fe4b09");
+const connection = new Connection(process.env.NEXT_PUBLIC_RPC_URL || "");
 
 export const verifyTransaction = async (
     hash: string, 
@@ -53,7 +52,7 @@ export const verifyTransaction = async (
         const USDC_MINT = new PublicKey(Tokens["USDC"].mint);
         const merchantUSDCAccount = await getAssociatedTokenAddress(USDC_MINT, merchantKey);
 
-        let payer = accountKeys[0].pubkey.toBase58(); // First signer is usually the payer
+        const payer = accountKeys[0].pubkey.toBase58(); // First signer is usually the payer
         let receiver = "";
         let amountTransferred = 0;
 

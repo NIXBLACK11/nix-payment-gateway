@@ -135,7 +135,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ sessionId }) => {
             console.log("Transaction Signature:", signature1);
             console.log(signature, signature1);
 
-            const response = verifyPayment(sessionId, signature1, publicKey.toString());
+            const response = await verifyPayment(sessionId, signature1, publicKey.toString());
             if (!response) {
                 alert('Corrupted payment');
                 return;
