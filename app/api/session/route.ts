@@ -31,8 +31,7 @@ export async function POST(req: NextRequest) {
             address: user.address,
             logoUrl: user.logoUrl,
             plan,
-            price: tier.price,
-            hash: '',
+            price: tier.price
         });
 
         return NextResponse.json({ sessionId: newSession._id }, { status: 201 });

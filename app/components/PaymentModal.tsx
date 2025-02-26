@@ -3,12 +3,13 @@
 import { Tokens } from "@/constants/Tokens";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 import { useEffect, useState } from "react";
-import { PublicKey, Connection } from "@solana/web3.js";
+import { PublicKey, Connection, VersionedTransaction } from "@solana/web3.js";
 import { getAssociatedTokenAddress, TOKEN_PROGRAM_ID, ASSOCIATED_TOKEN_PROGRAM_ID } from "@solana/spl-token";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { fetchSession } from "../lib/fetchSession";
 import { useRouter } from "next/navigation";
 import { verifyPayment } from "../lib/verifyPayment";
+import { bs58 } from "@coral-xyz/anchor/dist/cjs/utils/bytes";
 
 const RPC_URL = process.env.NEXT_PUBLIC_RPC_URL || "";
 console.log(RPC_URL);
@@ -23,27 +24,18 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ sessionId }) => {
     const router = useRouter();
     const { publicKey, signTransaction } = useWallet();
     const [loading, setLoading] = useState(false);
-    const [email, setEmail] = useState("siddharthsinghrana11@gmail.com");
-    const [saasLogoURL, setSaasLogoURL] = useState(
-        "https://raw.githubusercontent.com/NIXBLACK11/animos/refs/heads/main/public/icon1.png"
-    );
-    const [saasName, setSaasName] = useState("animos");
-    const [plan, setPlan] = useState("Premium");
-    const [pricing, setPricing] = useState(1);
-    const [merchantWalletAddress, setMerchantWalletAddress] = useState(
-        "FeA7Nhr2xNtA4SZfDLBWxFSSVXxbrQd8k3wuWpz9V2qW"
-    );
+    const [email, setEmail] = useState("");
+    const [saasLogoURL, setSaasLogoURL] = useState("");
+    const [saasName, setSaasName] = useState("");
+    const [plan, setPlan] = useState("");
+    const [pricing, setPricing] = useState(0);
+    const [merchantWalletAddress, setMerchantWalletAddress] = useState("");
     const [selectedToken, setSelectedToken] = useState<keyof typeof Tokens | "">("");
     const [tokenMintAddress, setTokenMintAddress] = useState("");
 
     useEffect(() => {
         const fetchSessionCaller = async () => {
             const res = await fetchSession(sessionId);
-            console.log(res);
-            if (res && res.hash != '') {
-                router.push("/exampleSaas");
-                return;
-            }
             if (!res || !res._id || !res.address || !res.email || !res.plan || !res.price || !res.saasId || !res.time) {
                 router.push("/exampleSaas");
                 return;
@@ -74,8 +66,8 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ sessionId }) => {
 
         try {
             /////////////////////////////
-            const tokenInfo = await connection.getParsedAccountInfo(new PublicKey(tokenMintAddress));
-            console.log("Token Info:", tokenInfo);
+            // const tokenInfo = await connection.getParsedAccountInfo(new PublicKey(tokenMintAddress));
+            // console.log("Token Info:", tokenInfo);
             // const accountInfo = await getAccount(connection, publicKey);
             // console.log("Customer Token Balance:", accountInfo.amount.toString());
             /////////////////////////////
@@ -117,36 +109,38 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ sessionId }) => {
                 throw new Error("Invalid swap response. Check parameters.");
             }
 
-            // const transactionBase64 = swapResponse.swapTransaction;
-            // console.log("Transaction->", transactionBase64);
-            // const transaction = VersionedTransaction.deserialize(Buffer.from(transactionBase64, "base64"));
+            const transactionBase64 = swapResponse.swapTransaction;
+            console.log("Transaction->", transactionBase64);
+            const transaction = VersionedTransaction.deserialize(Buffer.from(transactionBase64, "base64"));
 
-            // const signedTransaction = await signTransaction(transaction);
-            // const transactionBinary = signedTransaction.serialize();
-            // console.log("---------------------------------------------------------");
-            // const signature1 = bs58.encode(signedTransaction.signatures[0]);
-            // console.log("Transaction Signature:", signature1);
+            const signedTransaction = await signTransaction(transaction);
+            const transactionBinary = signedTransaction.serialize();
 
-            // // Send transaction
-            // const signature = await connection.sendRawTransaction(transactionBinary, { 
-            //     maxRetries: 10, 
-            //     preflightCommitment: "finalized" 
-            // });
-            // console.log(`Transaction Sent: https://solscan.io/tx/${signature}/`);
+            // Send transaction
+            const signature = await connection.sendRawTransaction(transactionBinary, {
+                maxRetries: 10,
+                preflightCommitment: "finalized"
+            });
+            console.log(`Transaction Sent: https://solscan.io/tx/${signature}/`);
 
-            // // Confirm transaction (Fixed)
-            // const confirmation = await connection.confirmTransaction(signature, "finalized");
-            // if (confirmation.value.err) {
-            //     throw new Error(`Transaction failed: ${JSON.stringify(confirmation.value.err)}`);
-            // }
+            // Confirm transaction (Fixed)
+            const confirmation = await connection.confirmTransaction(signature, "finalized");
+            if (confirmation.value.err) {
+                throw new Error(`Transaction failed: ${JSON.stringify(confirmation.value.err)}`);
+            }
 
-            // console.log(`Transaction Successful: https://solscan.io/tx/${signature}/`);
+            console.log(`Transaction Successful: https://solscan.io/tx/${signature}/`);
 
-            const response = verifyPayment(sessionId, "ef43f", publicKey.toString());
+            const signature1 = bs58.encode(signedTransaction.signatures[0]);
+            console.log("Transaction Signature:", signature1);
+            console.log(signature, signature1);
+
+            const response = verifyPayment(sessionId, signature1, publicKey.toString());
             if (!response) {
                 alert('Corrupted payment');
                 return;
             }
+
             alert("Payment Successful!");
             setTimeout(() => {
                 router.push("exampleSaas");

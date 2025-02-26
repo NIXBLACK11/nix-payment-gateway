@@ -41,5 +41,4 @@ export type SessionType = {
     logoUrl: string;
     plan: string;
     price: number;
-    hash: string;
 };

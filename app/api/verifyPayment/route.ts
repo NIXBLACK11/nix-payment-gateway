@@ -2,28 +2,23 @@ import { connectDB } from "@/app/lib/mongo";
 import Session from "@/app/models/Session";
 import Buyer from "@/app/models/Buyer";
 import Tier from "@/app/models/Tier";
+import Signature from "@/app/models/Signature";
 import { NextRequest, NextResponse } from "next/server";
-
-// Implement this function for actual verification
-async function verifyTransaction(hash: string, pubKey: string): Promise<boolean> {
-    console.log("Verifying transaction:", hash, pubKey);
-    return true; // Replace with actual verification logic
-}
+// import { verifyTransaction } from "@/app/lib/verifyTransaction";
 
 export async function POST(req: NextRequest) {
     await connectDB();
 
     try {
-        const { sessionId, hash, userPubKey } = await req.json();
-        console.log("Here");
+        const { sessionId, signature, userPubKey } = await req.json();
 
-        if (!sessionId || !hash || !userPubKey) {
+        if (!sessionId || !signature || !userPubKey) {
             return NextResponse.json({ message: "Missing required fields" }, { status: 400 });
         }
 
-        const existingSessionWithHash = await Session.findOne({ hash });
-        if (existingSessionWithHash) {
-            return NextResponse.json({ message: "This transaction hash has already been used" }, { status: 409 });
+        const existingSignature = await Signature.findOne({ signature });
+        if (existingSignature) {
+            return NextResponse.json({ message: "This signature has already been used" }, { status: 409 });
         }
 
         const session = await Session.findById(sessionId);
@@ -36,12 +31,11 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ message: "Tier not found for this plan" }, { status: 404 });
         }
 
-        const isValid = await verifyTransaction(hash, userPubKey);
-        if (!isValid) {
-            return NextResponse.json({ message: "Transaction verification failed" }, { status: 400 });
-        }
-
-        await Session.findByIdAndUpdate(sessionId, { hash });
+        // Verify the transaction (replace with actual logic)
+        // const isValid = await verifyTransaction(signature, userPubKey, session.price, session.address);
+        // if (!isValid) {
+        //     return NextResponse.json({ message: "Transaction verification failed" }, { status: 400 });
+        // }
 
         await Buyer.create({
             saasId: session.saasId,
@@ -49,7 +43,10 @@ export async function POST(req: NextRequest) {
             plan: session.plan,
             time: new Date(),
         });
-        console.log("Buyer created");
+
+        await Signature.create({ signature });
+
+        await Session.findByIdAndDelete(sessionId);
 
         return NextResponse.json({ message: "Payment verified and buyer added" }, { status: 200 });
 

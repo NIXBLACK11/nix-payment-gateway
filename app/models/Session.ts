@@ -9,7 +9,6 @@ export interface ISession extends Document {
     logoUrl: string;
     plan: string;
     price: number;
-    hash: string;
 }
 
 const SessionSchema = new Schema<ISession>({
@@ -21,7 +20,6 @@ const SessionSchema = new Schema<ISession>({
     logoUrl: { type: String, required: true },
     plan: { type: String, required: true },
     price: { type: Number, required: true },
-    hash: { type: String, required: false }
 });
 
 const Session = mongoose.models.Session || mongoose.model<ISession>("Session", SessionSchema);
