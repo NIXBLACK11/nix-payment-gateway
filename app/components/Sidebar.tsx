@@ -25,7 +25,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ setActivePage, activePage, set
     return (
         <div className="h-screen flex flex-col fixed w-2/12">
             <div className="p-4 border-b border-gray-200 flex items-center justify-between">
-                <h1 className="text-lg font-semibold text-black">Crypto Pay</h1>
+                <h1 className="text-lg font-semibold text-black">nixpay</h1>
                 <button
                     className="p-2 hover:bg-gray-100 rounded-lg transition-colors text-black"
                     onClick={() => {

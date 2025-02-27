@@ -15,7 +15,7 @@ function PaymentContent() {
         }
     }, [sessionId, router]);
 
-    return <PaymentModal sessionId={sessionId} />;
+    return <PaymentModal sessionId={sessionId} redirectUrl={"exampleSaas"}/>;
 }
 
 export default function Payment() {

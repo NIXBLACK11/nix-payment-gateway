@@ -18,9 +18,10 @@ const USDC_MINT = new PublicKey(Tokens["USDC"].mint);
 
 interface PaymentModalProps {
     sessionId: string;
+    redirectUrl: string;
 }
 
-export const PaymentModal: React.FC<PaymentModalProps> = ({ sessionId }) => {
+export const PaymentModal: React.FC<PaymentModalProps> = ({ sessionId, redirectUrl }) => {
     const router = useRouter();
     const { publicKey, signTransaction } = useWallet();
     const [loading, setLoading] = useState(false);
@@ -37,7 +38,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ sessionId }) => {
         const fetchSessionCaller = async () => {
             const res = await fetchSession(sessionId);
             if (!res || !res._id || !res.address || !res.email || !res.plan || !res.price || !res.saasId || !res.time) {
-                router.push("/exampleSaas");
+                router.push(redirectUrl);
                 return;
             }
             setEmail(res.email);
@@ -143,7 +144,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ sessionId }) => {
 
             alert("Payment Successful!");
             setTimeout(() => {
-                router.push("exampleSaas");
+                router.push(redirectUrl);
             }, 3000);
         } catch (err) {
             console.error("Payment Error:", err);

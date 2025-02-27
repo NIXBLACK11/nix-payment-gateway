@@ -8,9 +8,9 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
 
   try {
     const id = (await params).id;
-    const { saasName, logoUrl, address, callBack, tiers } = await req.json();
+    const { saasName, logoUrl, address, callBack, email, tiers } = await req.json();
 
-    const updatedUser = await User.findByIdAndUpdate(id, { saasName, logoUrl, address, callBack }, { new: true });
+    const updatedUser = await User.findByIdAndUpdate(id, { saasName, logoUrl, address, callBack, email }, { new: true });
 
     if (!updatedUser) {
       return NextResponse.json({ message: "User not found" }, { status: 404 });

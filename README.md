@@ -26,3 +26,12 @@ npm run workers
 
   workers repo
   https://github.com/NIXBLACK11/nix-payment-gateway-workers
+
+
+
+
+kal->
+
+imp->sig verify(2)(https://station.jup.ag/guides/general/verify-swaps-with-SolanaFM#verifying-your-swap)
+deploy worker(rocky bro)
+add to npm(1)

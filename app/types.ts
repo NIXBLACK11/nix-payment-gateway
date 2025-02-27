@@ -14,6 +14,7 @@ export type UserType = {
     logoUrl: string;
     address: string;
     callBack: string;
+    email: string;
     tiers: TierType[];
 };
 
