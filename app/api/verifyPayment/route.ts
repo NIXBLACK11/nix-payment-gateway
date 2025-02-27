@@ -7,7 +7,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { callbackQueue, emailQueue } from "@/app/lib/queue";
 import User from "@/app/models/User";
 import mongoose from "mongoose";
-// import { verifyTransaction } from "@/app/lib/verifyTransaction";
+import { verifyTransaction } from "@/app/lib/verifyTransaction";
 
 export async function POST(req: NextRequest) {
     await connectDB();
@@ -45,10 +45,10 @@ export async function POST(req: NextRequest) {
         }
 
         // Verify the transaction (replace with actual logic)
-        // const isValid = await verifyTransaction(signature, userPubKey, session.price, session.address);
-        // if (!isValid) {
-        //     return NextResponse.json({ message: "Transaction verification failed" }, { status: 400 });
-        // }
+        const isValid = await verifyTransaction(signature, userPubKey, session.price, session.address);
+        if (!isValid) {
+            return NextResponse.json({ message: "Transaction verification failed" }, { status: 400 });
+        }
 
         await Buyer.create({
             saasId: session.saasId,

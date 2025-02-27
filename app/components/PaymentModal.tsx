@@ -170,7 +170,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ sessionId, redirectU
                             Subscribe to {saasName} {plan}
                         </h1>
                         <div className="text-3xl font-normal text-black mb-1">
-                            US${pricing}.00
+                            US${pricing}
                             <span className="text-sm text-gray-500 ml-1">per month</span>
                         </div>
                     </div>
@@ -181,12 +181,12 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ sessionId, redirectU
                                 {saasName} {plan}
                                 <div className="text-sm text-gray-400">Billed monthly</div>
                             </div>
-                            <div>US${pricing}.00</div>
+                            <div>US${pricing}</div>
                         </div>
 
                         <div className="flex justify-between py-2 font-medium">
                             <div>Total due today</div>
-                            <div>US${pricing}.00</div>
+                            <div>US${pricing}</div>
                         </div>
                     </div>
                 </div>
