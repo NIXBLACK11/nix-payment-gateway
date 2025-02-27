@@ -34,7 +34,7 @@ export const verifyTransaction = async (hash: string, userPubKey: string, price:
         if(!balanceBefore || !balanceAfter) return false;
 
         const payer = accountKeys[0].pubkey.toBase58();
-        let amountTransferred = balanceAfter-balanceBefore;
+        const amountTransferred = balanceAfter-balanceBefore;
 
         console.log("🔹 Payer:", payer);
         console.log("🔹 Amount Transferred:", amountTransferred);
