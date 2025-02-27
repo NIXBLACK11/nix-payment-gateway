@@ -57,7 +57,7 @@ export async function POST(req: NextRequest) {
             time: new Date(),
         });
 
-        // await Signature.create({ signature });
+        await Signature.create({ signature });
 
         await Session.findByIdAndDelete(sessionId);
 
