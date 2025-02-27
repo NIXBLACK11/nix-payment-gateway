@@ -63,6 +63,7 @@ export async function POST(req: NextRequest) {
 
         const emailObject = {
             buyerEmail: session.email,
+            merchantEmail: user.email,
             plan: session.plan,
             saasName: user.saasName,
             logoUrl: user.logoUrl

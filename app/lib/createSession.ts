@@ -9,7 +9,7 @@ export async function createSession(saasId: string, email: string, plan: string)
         if (!res.ok) return null;
 
         const data = await res.json();
-        return data.sessionId; // Returns the session ID
+        return data.sessionId;
     } catch (error) {
         console.error("Error creating session:", error);
         return null;
