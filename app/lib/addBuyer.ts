@@ -2,13 +2,14 @@ export async function addBuyer(
     saasId: string,
     email: string,
     plan: string,
+    price: number,
     time: Date
 ): Promise<boolean> {
     try {
         const res = await fetch("/api/buyers/addBuyer", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ saasId, email, plan, time }),
+            body: JSON.stringify({ saasId, email, plan, price, time }),
         });
 
         if (!res.ok) return false;

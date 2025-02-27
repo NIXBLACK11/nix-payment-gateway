@@ -1,7 +1,6 @@
 import { connectDB } from "@/app/lib/mongo";
 import User from "@/app/models/User";
 import Buyer from "@/app/models/Buyer";
-import Tier from "@/app/models/Tier";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET( req: NextRequest, { params }: { params: Promise<{ publicKey: string }> } ) {
@@ -26,25 +25,16 @@ export async function GET( req: NextRequest, { params }: { params: Promise<{ pub
 			time: { $gte: oneMonthAgo },
 		}).sort({ time: -1 });
 
-		const tiers = await Tier.find({ saasId: { $in: saasIds } });
-
 		const responseData = saasList.map(saas => ({
 			saasName: saas.saasName,
 			buyers: buyers
 				.filter(buyer => buyer.saasId.toString() === saas._id.toString())
-				.map(buyer => {
-					const tier = tiers.find(t =>
-						t.saasId.toString() === buyer.saasId.toString() &&
-						t.tier === buyer.plan
-					);
-
-					return {
-						email: buyer.email,
-						plan: buyer.plan,
-						price: tier ? tier.price : null,
-						time: buyer.time,
-					};
-				}),
+				.map(buyer => ({
+					email: buyer.email,
+					plan: buyer.plan,
+					price: buyer.price,
+					time: buyer.time,
+				})),
 		}));
 
 		return NextResponse.json({ data: responseData }, { status: 200 });

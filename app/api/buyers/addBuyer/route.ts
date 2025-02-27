@@ -6,13 +6,13 @@ export async function POST(req: NextRequest) {
     await connectDB();
 
     try {
-        const { saasId, email, plan, time } = await req.json();
+        const { saasId, email, plan, price, time } = await req.json();
 
-        if (!saasId || !email || !plan || !time) {
+        if (!saasId || !email || !plan || !price || !time) {
             return NextResponse.json({ message: "Missing required fields" }, { status: 400 });
         }
 
-        const newBuyer = await Buyer.create({ saasId, email, plan, time });
+        const newBuyer = await Buyer.create({ saasId, email, plan, price, time });
 
         return NextResponse.json({ message: "Buyer added successfully", buyer: newBuyer }, { status: 201 });
     } catch (error) {
