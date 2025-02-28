@@ -26,11 +26,11 @@ npm run workers
 workers repo
 https://github.com/NIXBLACK11/nix-payment-gateway-workers
 
-- deploy worker
-
 npm run lint
 npm run format
 
 rm -rf dist
 npm run build
 npm publish --access public
+
+![Flow Diagram](FlowDiagram.jpeg)
