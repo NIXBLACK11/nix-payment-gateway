@@ -59,7 +59,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ sessionId, RPC_URL, 
             alert("Connect wallet to make payment!!");
             return;
         }
-        
+
         try {
             setLoading(true);
             /////////////////////////////
@@ -205,11 +205,13 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ sessionId, RPC_URL, 
                                 onChange={handleTokenChange}
                             >
                                 <option value="">Select Token</option>
-                                {Object.entries(Tokens).map(([key, token]) => (
-                                    <option key={key} value={key}>
-                                        {token.name}
-                                    </option>
-                                ))}
+                                {Object.entries(Tokens)
+                                    .filter(([key]) => key !== "USDC") // Skip USDC
+                                    .map(([key, token]) => (
+                                        <option key={key} value={key}>
+                                            {token.name}
+                                        </option>
+                                    ))}
                             </select>
                             <div className="flex items-center gap-2 text-sm text-gray-500">
                                 {selectedToken && Tokens[selectedToken] && (
