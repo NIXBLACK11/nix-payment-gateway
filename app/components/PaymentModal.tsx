@@ -55,13 +55,13 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ sessionId, RPC_URL, 
     };
 
     const handlePayment = async () => {
-        setLoading(true);
         if (!publicKey || !signTransaction) {
             alert("Connect wallet to make payment!!");
             return;
         }
-
+        
         try {
+            setLoading(true);
             /////////////////////////////
             // const tokenInfo = await connection.getParsedAccountInfo(new PublicKey(tokenMintAddress));
             // console.log("Token Info:", tokenInfo);

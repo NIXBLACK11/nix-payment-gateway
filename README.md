@@ -27,10 +27,3 @@ npm run workers
   workers repo
   https://github.com/NIXBLACK11/nix-payment-gateway-workers
 
-
-
-
-kal->
-
-deploy worker(rocky bro)
-ask if works with phantom

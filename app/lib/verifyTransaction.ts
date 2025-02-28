@@ -1,5 +1,6 @@
 import { Connection, TokenBalance } from "@solana/web3.js";
 const connection = new Connection(process.env.NEXT_PUBLIC_RPC_URL || "");
+const EPSILON = 1e-6;
 
 const returnAmount = (balances: TokenBalance[], merchantPubKey: string): number | null => {
     const merchantBalance = balances.find(balance => balance.owner === merchantPubKey);
@@ -41,7 +42,7 @@ export const verifyTransaction = async (hash: string, userPubKey: string, price:
         console.log("🔹 Expected Amount:", price);
 
         if (payer !== userPubKey) return false;
-        if (amountTransferred < price) return false;
+        if (amountTransferred + EPSILON < price) return false;
 
         console.log("✅ Transaction verification successful!");
         return true;

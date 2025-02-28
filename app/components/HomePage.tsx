@@ -27,9 +27,6 @@ export const HomePage = () => {
 
                 if (fetchedUserData) {
                     setUserData(fetchedUserData);
-                } else {
-                    alert("Error fetching user data");
-                    return;
                 }
             } catch (err) {
                 console.error("Error fetching user data:", err);

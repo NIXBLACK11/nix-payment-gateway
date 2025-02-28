@@ -54,6 +54,7 @@ export async function POST(req: NextRequest) {
             saasId: session.saasId,
             email: session.email,
             plan: session.plan,
+            price: session.price,
             time: new Date(),
         });
 
@@ -84,6 +85,7 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ message: "Payment verified and buyer added" }, { status: 200 });
 
     } catch (error) {
+        console.log(error);
         return NextResponse.json({ message: "Error verifying payment", error }, { status: 500 });
     }
 }
