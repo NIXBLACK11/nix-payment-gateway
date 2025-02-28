@@ -1,4 +1,4 @@
-export type PageKey = "home" | "saas" | "buyers";
+export type PageKey = "home" | "saas" | "buyers" | "howtouse";
 
 export type TierType = {
     _id: string;

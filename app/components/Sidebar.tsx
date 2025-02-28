@@ -1,6 +1,6 @@
 import { FiHome, FiLogOut, FiShoppingBag, FiSidebar } from "react-icons/fi";
 import { PageKey } from "../types";
-import { FaUser } from "react-icons/fa";
+import { FaDochub, FaUser } from "react-icons/fa";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useRouter } from "next/navigation";
 
@@ -19,6 +19,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ setActivePage, activePage, set
         { id: 'home', label: 'Dashboard', icon: <FiHome /> },
         { id: 'saas', label: 'Create Saas', icon: <FiShoppingBag /> },
         { id: 'buyers', label: 'Buyers Stats', icon: <FaUser /> },
+        { id: 'howtouse', label: 'How to use', icon: <FaDochub /> },
         // { id: 'settings', label: 'Settings', icon: <FiSettings /> },
     ];
 

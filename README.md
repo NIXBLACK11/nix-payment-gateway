@@ -27,3 +27,6 @@ npm run workers
   workers repo
   https://github.com/NIXBLACK11/nix-payment-gateway-workers
 
+- deploy worker
+- usdc remove
+- prettier
