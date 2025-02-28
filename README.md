@@ -32,6 +32,5 @@ npm run workers
 
 kal->
 
-imp->sig verify(2)(https://station.jup.ag/guides/general/verify-swaps-with-SolanaFM#verifying-your-swap)
 deploy worker(rocky bro)
-add to npm(1)
+ask if works with phantom

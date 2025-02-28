@@ -1,5 +1,6 @@
 "use client";
 
+// import { PaymentModal } from "@nixblack/nix-payments-sdk";
 import { useRouter, useSearchParams } from "next/navigation";
 import { PaymentModal } from "../components/PaymentModal";
 import { Suspense, useEffect } from "react";
@@ -15,7 +16,11 @@ function PaymentContent() {
         }
     }, [sessionId, router]);
 
-    return <PaymentModal sessionId={sessionId} redirectUrl={"exampleSaas"}/>;
+    return <PaymentModal
+        sessionId={sessionId}
+        RPC_URL={process.env.NEXT_PUBLIC_RPC_URL || ''}
+        onRedirect={() => router.push("/exampleSaas")}
+    />;
 }
 
 export default function Payment() {

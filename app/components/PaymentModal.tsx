@@ -7,22 +7,16 @@ import { PublicKey, Connection, VersionedTransaction } from "@solana/web3.js";
 import { getAssociatedTokenAddress, TOKEN_PROGRAM_ID, ASSOCIATED_TOKEN_PROGRAM_ID } from "@solana/spl-token";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { fetchSession } from "../lib/fetchSession";
-import { useRouter } from "next/navigation";
 import { verifyPayment } from "../lib/verifyPayment";
 import { bs58 } from "@coral-xyz/anchor/dist/cjs/utils/bytes";
 
-const RPC_URL = process.env.NEXT_PUBLIC_RPC_URL || "";
-console.log(RPC_URL);
-const connection = new Connection(RPC_URL, "confirmed");
-const USDC_MINT = new PublicKey(Tokens["USDC"].mint);
-
 interface PaymentModalProps {
     sessionId: string;
-    redirectUrl: string;
+    RPC_URL: string;
+    onRedirect: () => void;
 }
 
-export const PaymentModal: React.FC<PaymentModalProps> = ({ sessionId, redirectUrl }) => {
-    const router = useRouter();
+export const PaymentModal: React.FC<PaymentModalProps> = ({ sessionId, RPC_URL, onRedirect }) => {
     const { publicKey, signTransaction } = useWallet();
     const [loading, setLoading] = useState(false);
     const [email, setEmail] = useState("");
@@ -33,12 +27,14 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ sessionId, redirectU
     const [merchantWalletAddress, setMerchantWalletAddress] = useState("");
     const [selectedToken, setSelectedToken] = useState<keyof typeof Tokens | "">("");
     const [tokenMintAddress, setTokenMintAddress] = useState("");
+    const connection = new Connection(RPC_URL || "", "confirmed");
+    const USDC_MINT = new PublicKey(Tokens["USDC"].mint);
 
     useEffect(() => {
         const fetchSessionCaller = async () => {
             const res = await fetchSession(sessionId);
             if (!res || !res._id || !res.address || !res.email || !res.plan || !res.price || !res.saasId || !res.time) {
-                router.push(redirectUrl);
+                onRedirect();
                 return;
             }
             setEmail(res.email);
@@ -144,7 +140,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ sessionId, redirectU
 
             alert("Payment Successful!");
             setTimeout(() => {
-                router.push(redirectUrl);
+                onRedirect();
             }, 3000);
         } catch (err) {
             console.error("Payment Error:", err);

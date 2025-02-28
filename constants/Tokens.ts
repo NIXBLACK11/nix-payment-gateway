@@ -18,16 +18,16 @@ export const Tokens = {
 	},
 	BONK: {
 		name: "Bonk",
-		image: "https://cryptologos.cc/logos/bonk-bonk-logo.png",
+		image: "https://quei6zhlcfsxdfyes577gy7bkxmuz7qqakyt72xlbkyh7fysmoza.arweave.net/hQiPZOsRZXGXBJd_82PhVdlM_hACsT_q6wqwf5cSY7I",
 		mint: "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263",
 		decimal: 5
 	},
-	// USDT: {
-	// 	name: "Tether",
-	// 	image: "https://cryptologos.cc/logos/tether-usdt-logo.png",
-	// 	mint: "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB",
-	// 	decimal: 
-	// },
+	USDT: {
+		name: "Tether",
+		image: "https://cryptologos.cc/logos/tether-usdt-logo.png",
+		mint: "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB",
+		decimal: 6
+	}
 	// RAY: {
 	//   name: "Raydium",
 	//   image: "https://cryptologos.cc/logos/raydium-ray-logo.png",

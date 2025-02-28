@@ -1,8 +1,9 @@
 "use client"
 
 import React, { useState } from 'react';
-import { createSession } from '../lib/createSession';
+// import { createSession } from '../lib/createSession';
 import { useRouter } from 'next/navigation';
+import { createSession } from '@nixblack/nix-payments-sdk';
 
 export default function ExampleSaas() {
     const [saasId, setSaasId] = useState('');
