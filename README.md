@@ -30,3 +30,7 @@ https://github.com/NIXBLACK11/nix-payment-gateway-workers
 
 npm run lint
 npm run format
+
+rm -rf dist
+npm run build
+npm publish --access public

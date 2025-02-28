@@ -2,7 +2,7 @@
 
 import { PaymentModal } from '@nixblack/nix-payments-sdk';
 import { useRouter, useSearchParams } from 'next/navigation';
-// import { PaymentModal } from "../components/PaymentModal";
+// import { PaymentModal } from '../components/PaymentModal';
 import { Suspense, useEffect } from 'react';
 
 function PaymentContent() {
