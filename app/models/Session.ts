@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose, { Schema, Document } from 'mongoose';
 
 export interface ISession extends Document {
     saasId: mongoose.Types.ObjectId;
@@ -12,7 +12,11 @@ export interface ISession extends Document {
 }
 
 const SessionSchema = new Schema<ISession>({
-    saasId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    saasId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true,
+    },
     saasName: { type: String, required: true },
     time: { type: Date, default: Date.now },
     email: { type: String, required: true },
@@ -22,6 +26,8 @@ const SessionSchema = new Schema<ISession>({
     price: { type: Number, required: true },
 });
 
-const Session = mongoose.models.Session || mongoose.model<ISession>("Session", SessionSchema);
+const Session =
+    mongoose.models.Session ||
+    mongoose.model<ISession>('Session', SessionSchema);
 
 export default Session;

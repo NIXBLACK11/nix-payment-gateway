@@ -1,7 +1,7 @@
-"use client"
+'use client';
 
 import { useEffect, useState } from 'react';
-import { FiSidebar } from "react-icons/fi";
+import { FiSidebar } from 'react-icons/fi';
 import { Sidebar } from '../components/Sidebar';
 import { MainPart } from '../components/MainPart';
 import { PageKey } from '../types';
@@ -15,15 +15,20 @@ export default function User() {
     const router = useRouter();
 
     useEffect(() => {
-        if(!connected) router.push("../");
+        if (!connected) router.push('../');
     }, [connected]);
 
     return (
         <div className="max-w-screen min-h-screen bg-white">
-            {(!hide) ? (
+            {!hide ? (
                 <div className="w-full h-full flex flex-row">
                     <div className="w-2/12 flex flex-col justify-between bg-white border-r border-gray-200">
-                        <Sidebar setActivePage={setActivePage} activePage={activePage} setHide={setHide} hide={hide} />
+                        <Sidebar
+                            setActivePage={setActivePage}
+                            activePage={activePage}
+                            setHide={setHide}
+                            hide={hide}
+                        />
                     </div>
                     <div className="w-10/12 bg-white">
                         <MainPart activePage={activePage} />

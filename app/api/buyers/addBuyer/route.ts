@@ -1,6 +1,6 @@
-import { connectDB } from "@/app/lib/mongo";
-import Buyer from "@/app/models/Buyer";
-import { NextRequest, NextResponse } from "next/server";
+import { connectDB } from '@/app/lib/mongo';
+import Buyer from '@/app/models/Buyer';
+import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {
     await connectDB();
@@ -9,13 +9,28 @@ export async function POST(req: NextRequest) {
         const { saasId, email, plan, price, time } = await req.json();
 
         if (!saasId || !email || !plan || !price || !time) {
-            return NextResponse.json({ message: "Missing required fields" }, { status: 400 });
+            return NextResponse.json(
+                { message: 'Missing required fields' },
+                { status: 400 }
+            );
         }
 
-        const newBuyer = await Buyer.create({ saasId, email, plan, price, time });
+        const newBuyer = await Buyer.create({
+            saasId,
+            email,
+            plan,
+            price,
+            time,
+        });
 
-        return NextResponse.json({ message: "Buyer added successfully", buyer: newBuyer }, { status: 201 });
+        return NextResponse.json(
+            { message: 'Buyer added successfully', buyer: newBuyer },
+            { status: 201 }
+        );
     } catch (error) {
-        return NextResponse.json({ message: "Error adding buyer", error }, { status: 500 });
+        return NextResponse.json(
+            { message: 'Error adding buyer', error },
+            { status: 500 }
+        );
     }
 }

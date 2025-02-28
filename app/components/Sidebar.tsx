@@ -1,8 +1,8 @@
-import { FiHome, FiLogOut, FiShoppingBag, FiSidebar } from "react-icons/fi";
-import { PageKey } from "../types";
-import { FaDochub, FaUser } from "react-icons/fa";
-import { useWallet } from "@solana/wallet-adapter-react";
-import { useRouter } from "next/navigation";
+import { FiHome, FiLogOut, FiShoppingBag, FiSidebar } from 'react-icons/fi';
+import { PageKey } from '../types';
+import { FaDochub, FaUser } from 'react-icons/fa';
+import { useWallet } from '@solana/wallet-adapter-react';
+import { useRouter } from 'next/navigation';
 
 type SidebarProps = {
     setActivePage: (page: PageKey) => void;
@@ -11,7 +11,12 @@ type SidebarProps = {
     hide: boolean;
 };
 
-export const Sidebar: React.FC<SidebarProps> = ({ setActivePage, activePage, setHide, hide }) => {
+export const Sidebar: React.FC<SidebarProps> = ({
+    setActivePage,
+    activePage,
+    setHide,
+    hide,
+}) => {
     const { disconnect } = useWallet();
     const router = useRouter();
 
@@ -39,14 +44,17 @@ export const Sidebar: React.FC<SidebarProps> = ({ setActivePage, activePage, set
 
             <nav className="flex-grow py-6">
                 <ul className="space-y-1">
-                    {menuItems.map(item => (
+                    {menuItems.map((item) => (
                         <li key={item.id}>
                             <button
-                                onClick={() => setActivePage(item.id as PageKey)}
-                                className={`w-full flex items-center px-4 py-3 text-sm ${activePage === item.id
-                                    ? 'bg-gray-100 text-black font-medium'
-                                    : 'text-gray-600 hover:bg-gray-50'
-                                    }`}
+                                onClick={() =>
+                                    setActivePage(item.id as PageKey)
+                                }
+                                className={`w-full flex items-center px-4 py-3 text-sm ${
+                                    activePage === item.id
+                                        ? 'bg-gray-100 text-black font-medium'
+                                        : 'text-gray-600 hover:bg-gray-50'
+                                }`}
                             >
                                 <span className="mr-3">{item.icon}</span>
                                 <span>{item.label}</span>
@@ -61,13 +69,15 @@ export const Sidebar: React.FC<SidebarProps> = ({ setActivePage, activePage, set
                     className="w-full flex items-center px-4 py-3 text-sm text-gray-600 hover:bg-gray-50 rounded"
                     onClick={() => {
                         disconnect();
-                        router.push("../");
+                        router.push('../');
                     }}
                 >
-                    <span className="mr-3"><FiLogOut /></span>
+                    <span className="mr-3">
+                        <FiLogOut />
+                    </span>
                     <span>Log Out</span>
                 </button>
             </div>
         </div>
     );
-}
+};

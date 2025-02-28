@@ -1,16 +1,22 @@
-import { connectDB } from "@/app/lib/mongo";
-import User from "@/app/models/User";
-import Tier from "@/app/models/Tier";
-import { NextRequest, NextResponse } from "next/server";
+import { connectDB } from '@/app/lib/mongo';
+import User from '@/app/models/User';
+import Tier from '@/app/models/Tier';
+import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET(req: NextRequest, { params }: { params: Promise<{ publicKey: string }> }) {
+export async function GET(
+    req: NextRequest,
+    { params }: { params: Promise<{ publicKey: string }> }
+) {
     await connectDB();
 
     try {
         const publicKey = (await params).publicKey;
         const users = await User.find({ publicKey });
         if (!users.length) {
-            return NextResponse.json({ message: "No users found for this publicKey" }, { status: 404 });
+            return NextResponse.json(
+                { message: 'No users found for this publicKey' },
+                { status: 404 }
+            );
         }
 
         const usersWithTiers = await Promise.all(
@@ -22,6 +28,9 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ publ
 
         return NextResponse.json({ users: usersWithTiers }, { status: 200 });
     } catch (error) {
-        return NextResponse.json({ message: "Error fetching user data", error }, { status: 500 });
+        return NextResponse.json(
+            { message: 'Error fetching user data', error },
+            { status: 500 }
+        );
     }
 }

@@ -1,16 +1,16 @@
-import { Worker } from "bullmq";
-import IORedis from "ioredis";
-import nodemailer from "nodemailer";
+import { Worker } from 'bullmq';
+import IORedis from 'ioredis';
+import nodemailer from 'nodemailer';
 
 const connection = new IORedis(process.env.REDIS_URL!, {
-    maxRetriesPerRequest: null
+    maxRetriesPerRequest: null,
 });
 
 const EMAIL_USER = process.env.EMAIL_USER;
 const EMAIL_PASS = process.env.EMAIL_PASS;
 
 const transporter = nodemailer.createTransport({
-    service: "gmail",
+    service: 'gmail',
     secure: true,
     port: 465,
     auth: {
@@ -20,11 +20,13 @@ const transporter = nodemailer.createTransport({
 });
 
 const worker = new Worker(
-    "emailQueue",
+    'emailQueue',
     async (job) => {
         const { buyerEmail, merchantEmail, plan, saasName, logoUrl } = job.data;
 
-        console.log(`📧 Sending email to ${buyerEmail} for ${saasName} - Plan: ${plan}`);
+        console.log(
+            `📧 Sending email to ${buyerEmail} for ${saasName} - Plan: ${plan}`
+        );
 
         try {
             await transporter.sendMail({
@@ -66,6 +68,6 @@ const worker = new Worker(
 );
 
 // Handle failed jobs
-worker.on("failed", (job, err) => {
+worker.on('failed', (job, err) => {
     console.error(`🚨 Email job ${job!.id} failed with error: ${err.message}`);
 });

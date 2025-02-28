@@ -1,18 +1,28 @@
-import { Connection, TokenBalance } from "@solana/web3.js";
-const connection = new Connection(process.env.NEXT_PUBLIC_RPC_URL || "");
+import { Connection, TokenBalance } from '@solana/web3.js';
+const connection = new Connection(process.env.NEXT_PUBLIC_RPC_URL || '');
 const EPSILON = 1e-6;
 
-const returnAmount = (balances: TokenBalance[], merchantPubKey: string): number | null => {
-    const merchantBalance = balances.find(balance => balance.owner === merchantPubKey);
+const returnAmount = (
+    balances: TokenBalance[],
+    merchantPubKey: string
+): number | null => {
+    const merchantBalance = balances.find(
+        (balance) => balance.owner === merchantPubKey
+    );
 
     if (!merchantBalance) return null;
 
     const { amount, decimals } = merchantBalance.uiTokenAmount;
     const finalAmount = parseFloat(amount) / Math.pow(10, decimals);
     return finalAmount;
-}
+};
 
-export const verifyTransaction = async (hash: string, userPubKey: string, price: number, merchantPubKey: string): Promise<boolean> => {
+export const verifyTransaction = async (
+    hash: string,
+    userPubKey: string,
+    price: number,
+    merchantPubKey: string
+): Promise<boolean> => {
     try {
         const transaction = await connection.getParsedTransaction(hash, {
             maxSupportedTransactionVersion: 0,
@@ -28,26 +38,26 @@ export const verifyTransaction = async (hash: string, userPubKey: string, price:
         const preBalances = transaction.meta.preTokenBalances;
         const postBalances = transaction.meta.postTokenBalances;
 
-        if(!preBalances || !postBalances) return false;
+        if (!preBalances || !postBalances) return false;
 
         const balanceBefore = returnAmount(preBalances, merchantPubKey);
         const balanceAfter = returnAmount(postBalances, merchantPubKey);
-        if(!balanceBefore || !balanceAfter) return false;
+        if (!balanceBefore || !balanceAfter) return false;
 
         const payer = accountKeys[0].pubkey.toBase58();
-        const amountTransferred = balanceAfter-balanceBefore;
+        const amountTransferred = balanceAfter - balanceBefore;
 
-        console.log("🔹 Payer:", payer);
-        console.log("🔹 Amount Transferred:", amountTransferred);
-        console.log("🔹 Expected Amount:", price);
+        console.log('🔹 Payer:', payer);
+        console.log('🔹 Amount Transferred:', amountTransferred);
+        console.log('🔹 Expected Amount:', price);
 
         if (payer !== userPubKey) return false;
         if (amountTransferred + EPSILON < price) return false;
 
-        console.log("✅ Transaction verification successful!");
+        console.log('✅ Transaction verification successful!');
         return true;
     } catch (error) {
-        console.log("❌ Error verifying transaction:", error);
+        console.log('❌ Error verifying transaction:', error);
         return false;
     }
 };

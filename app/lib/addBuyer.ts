@@ -6,9 +6,9 @@ export async function addBuyer(
     time: Date
 ): Promise<boolean> {
     try {
-        const res = await fetch("/api/buyers/addBuyer", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
+        const res = await fetch('/api/buyers/addBuyer', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ saasId, email, plan, price, time }),
         });
 
@@ -16,7 +16,7 @@ export async function addBuyer(
 
         return true;
     } catch (error) {
-        console.error("Error adding buyer:", error);
+        console.error('Error adding buyer:', error);
         return false;
     }
 }

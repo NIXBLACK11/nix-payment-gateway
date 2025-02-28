@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 html {
-	font-family: var(--font-geist-sans), sans-serif;
+    font-family: var(--font-geist-sans), sans-serif;
 }
 
 body {
-	font-family: var(--font-geist-mono), monospace;
+    font-family: var(--font-geist-mono), monospace;
 }

@@ -1,26 +1,28 @@
-"use client";
+'use client';
 
-import { PaymentModal } from "@nixblack/nix-payments-sdk";
-import { useRouter, useSearchParams } from "next/navigation";
+import { PaymentModal } from '@nixblack/nix-payments-sdk';
+import { useRouter, useSearchParams } from 'next/navigation';
 // import { PaymentModal } from "../components/PaymentModal";
-import { Suspense, useEffect } from "react";
+import { Suspense, useEffect } from 'react';
 
 function PaymentContent() {
     const router = useRouter();
     const searchParams = useSearchParams();
-    const sessionId = searchParams.get("sessionId") || "";
+    const sessionId = searchParams.get('sessionId') || '';
 
     useEffect(() => {
         if (!sessionId) {
-            router.push("/exampleSaas");
+            router.push('/exampleSaas');
         }
     }, [sessionId, router]);
 
-    return <PaymentModal
-        sessionId={sessionId}
-        RPC_URL={process.env.NEXT_PUBLIC_RPC_URL || ''}
-        onRedirect={() => router.push("/exampleSaas")}
-    />;
+    return (
+        <PaymentModal
+            sessionId={sessionId}
+            RPC_URL={process.env.NEXT_PUBLIC_RPC_URL || ''}
+            onRedirect={() => router.push('/exampleSaas')}
+        />
+    );
 }
 
 export default function Payment() {

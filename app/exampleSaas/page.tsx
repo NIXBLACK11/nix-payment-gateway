@@ -1,4 +1,4 @@
-"use client"
+'use client';
 
 import React, { useState } from 'react';
 // import { createSession } from '../lib/createSession';
@@ -20,13 +20,13 @@ export default function ExampleSaas() {
 
         try {
             const result = await createSession(saasId, email, plan);
-            if(!result) {
-                alert("Error creating session");
+            if (!result) {
+                alert('Error creating session');
                 return;
             }
             router.push(`/payment?sessionId=${result}`);
         } catch (err) {
-            setError("Failed to create session. Please try again.");
+            setError('Failed to create session. Please try again.');
             console.log(err);
         } finally {
             setLoading(false);
@@ -34,16 +34,21 @@ export default function ExampleSaas() {
     };
 
     return (
-        <div className='h-screen w-screen bg-[#ffffff] flex justify-start items-center flex-col'>
-            <h1 className='text-4xl p-20'>Test Payment page</h1>
+        <div className="h-screen w-screen bg-[#ffffff] flex justify-start items-center flex-col">
+            <h1 className="text-4xl p-20">Test Payment page</h1>
             <div className="w-4/12 mx-auto">
                 <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-                    <h2 className="text-xl font-medium text-black mb-4">Create Session</h2>
+                    <h2 className="text-xl font-medium text-black mb-4">
+                        Create Session
+                    </h2>
                     <div className="h-1 w-20 bg-gray-500 mb-6"></div>
 
                     <form onSubmit={handleSubmit}>
                         <div className="mb-4">
-                            <label className="block text-sm font-medium text-black mb-1" htmlFor="saasId">
+                            <label
+                                className="block text-sm font-medium text-black mb-1"
+                                htmlFor="saasId"
+                            >
                                 SaaS ID
                             </label>
                             <input
@@ -57,7 +62,10 @@ export default function ExampleSaas() {
                         </div>
 
                         <div className="mb-4">
-                            <label className="block text-sm font-medium text-black mb-1" htmlFor="email">
+                            <label
+                                className="block text-sm font-medium text-black mb-1"
+                                htmlFor="email"
+                            >
                                 Email
                             </label>
                             <input
@@ -71,7 +79,10 @@ export default function ExampleSaas() {
                         </div>
 
                         <div className="mb-4">
-                            <label className="block text-sm font-medium text-black mb-1" htmlFor="plan">
+                            <label
+                                className="block text-sm font-medium text-black mb-1"
+                                htmlFor="plan"
+                            >
                                 Plan
                             </label>
                             <input
@@ -102,4 +113,4 @@ export default function ExampleSaas() {
             </div>
         </div>
     );
-};
+}
