@@ -216,7 +216,7 @@ export const HowToUse = () => {
                                         our SDK in your application code.
                                     </p>
                                     <div className="bg-black text-white p-6 rounded-lg mb-6 overflow-x-auto">
-                                        <code className="text-sm">{`import {'{ createSession }'} from '@nixblack/nix-payments-sdk';`}</code>
+                                        <code className="text-sm">{`import { createSession } from '@nixblack/nix-payments-sdk';`}</code>
                                     </div>
                                     <div className="bg-white p-6 rounded-lg border border-neutral-200 mb-6">
                                         <h4 className="font-bold mb-2">
