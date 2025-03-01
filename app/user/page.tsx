@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { FiSidebar } from 'react-icons/fi';
 import { Sidebar } from '../components/Sidebar';
 import { MainPart } from '../components/MainPart';
-import { Analytics } from "@vercel/analytics/react"
+import { Analytics } from '@vercel/analytics/react';
 import { PageKey } from '../types';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { useRouter } from 'next/navigation';
@@ -21,7 +21,7 @@ export default function User() {
 
     return (
         <div className="max-w-screen min-h-screen bg-white">
-            <Analytics />            
+            <Analytics />
             {!hide ? (
                 <div className="w-full h-full flex flex-row">
                     <div className="w-2/12 flex flex-col justify-between bg-white border-r border-gray-200">
