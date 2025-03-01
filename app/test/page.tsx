@@ -5,7 +5,7 @@ import { addBuyer } from '../lib/addBuyer';
 export default function TestPage() {
     const handleAddBuyer = async () => {
         const success = await addBuyer(
-            '67bd6d6387039dd6fe578b11',
+            '67bd71c887039dd6fe578b7a',
             'user@example.com',
             'Premium',
             1,
@@ -14,20 +14,20 @@ export default function TestPage() {
 
         const today = new Date();
         const previousDay = new Date();
-        previousDay.setDate(today.getDate() - 7); // Previous day
+        previousDay.setDate(today.getDate() - 3); // Previous day
 
         const nextDay = new Date();
-        nextDay.setDate(today.getDate() + 3); // Next day
+        nextDay.setDate(today.getDate() + 7); // Next day
 
         await addBuyer(
-            '67bd6d6387039dd6fe578b11',
+            '67bd71c887039dd6fe578b7a',
             'user@example.com',
             'Premium',
             1,
             previousDay
         );
         await addBuyer(
-            '67bd6d6387039dd6fe578b11',
+            '67bd71c887039dd6fe578b7a',
             'user@example.com',
             'Premium',
             1,
