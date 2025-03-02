@@ -386,6 +386,34 @@ export default function PaymentPage() {
                                                 payment completion or error
                                             </li>
                                         </ul>
+                                        <h4 className="font-bold mb-2 mt-6">
+                                            SaaS Example
+                                        </h4>
+                                        <p className="text-neutral-600 mb-3">
+                                            Before integrating our SDK, you can
+                                            test how it works. Simply provide
+                                            your{' '}
+                                            <span className="font-medium">
+                                                SaaS ID
+                                            </span>
+                                            ,{' '}
+                                            <span className="font-medium">
+                                                email
+                                            </span>
+                                            , and{' '}
+                                            <span className="font-medium">
+                                                tier name
+                                            </span>{' '}
+                                            to verify the setup.
+                                        </p>
+                                        <a
+                                            href="https://pay.nixblack.site/exampleSaas"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="text-blue-600 underline break-words"
+                                        >
+                                            https://pay.nixblack.site/exampleSaas
+                                        </a>
                                     </div>
                                     <div className="bg-neutral-100 p-4 rounded-lg">
                                         <p className="text-sm text-neutral-600">
